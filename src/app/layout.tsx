@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import BottomNav from "@/components/layout/BottomNav";
+import Header from "@/components/layout/Header";
+import { ConditionalBottomNav, ConditionalHeader } from "@/components/layout/ConditionalLayout";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,7 +27,16 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <main className="relative w-full bg-white max-w-[560px] mx-auto min-h-screen flex flex-col">
+          <ConditionalHeader />
+           <Toaster position="top-center" richColors />
+          {children}
+          <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[560px]">
+            <ConditionalBottomNav />
+          </div>
+        </main>
+      </body>
     </html>
   );
 }
